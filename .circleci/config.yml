@@ -1,4 +1,24 @@
-version: 2.1 
- 
-orbs:
-  win: circleci/windows@2.2.0
+version: 2.1
+executors:
+  my-custom-executor:
+    docker:
+      - image: cimg/base:stable
+        auth:
+          # ensure you have first added these secrets
+          # visit app.circleci.com/settings/project/github/Robinheqd/Windows-RDP/environment-variables
+          username: $DOCKER_HUB_USER
+          password: $DOCKER_HUB_PASSWORD
+jobs:
+  my-job-name:
+
+    executor: my-custom-executor
+    steps:
+      - checkout
+      - run: |
+          orbs:
+            win: circleci/windows@2.2.0
+
+workflows:
+  my-custom-workflow:
+    jobs:
+      - my-job-name
